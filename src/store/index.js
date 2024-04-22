@@ -19,18 +19,22 @@ export default createStore({
                 date: state.currentDate
             }
             state.lists.push(newTask);
+            localStorage.setItem('todoList', JSON.stringify(state.lists));
         },
         editTodo(state, { id, newValue }) {
             const todo = state.lists.find(todo => todo.id === id);
             if (todo) {
                 todo.title = newValue;
+                localStorage.setItem('todoList', JSON.stringify(state.lists));
             }
         },
         deleteTodo(state, id) {
             state.lists = state.lists.filter(todo => todo.id !== id);
+            localStorage.setItem('todoList', JSON.stringify(state.lists));
         },
         setLists(state, lists) {
             state.lists = lists;
+            localStorage.setItem('todoList', JSON.stringify(state.lists));
         },
         setLoading(state, loading) {
             state.loading = loading;
@@ -59,8 +63,8 @@ export default createStore({
                     const modifiedData = response.data.slice(0, 5).map(item => ({
                         id: item.id,
                         title: item.title,
-                        date: "2024-3-15", // Modify date here
-                        completed: true,    // Modify completed status here
+                        date: "2024-3-15", 
+                        completed: true,    
                     }));
                         commit('setLists', modifiedData);
                         // this.dispatch('updateFilteredTasks');
@@ -85,7 +89,6 @@ export default createStore({
     },
     getters: {
         filteredTasks(state) {
-            // Logic to filter tasks based on activeTab
             if (state.activeTab === 1) {
             return state.lists;
             } else if (state.activeTab === 2) {
