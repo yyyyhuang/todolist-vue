@@ -73,6 +73,9 @@ export default createStore({
                 } finally {
                     commit('setLoading', false);
                 }
+            } else {
+                const localData = JSON.parse(localStorage.getItem("todoList"))
+                commit('setList', localData)
             }
             
         },
